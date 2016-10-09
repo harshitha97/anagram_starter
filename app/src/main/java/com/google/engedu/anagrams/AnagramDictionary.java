@@ -13,8 +13,7 @@ import java.util.Random;
 public class AnagramDictionary {
 
     private static final int MIN_NUM_ANAGRAMS = 5;
-    private static final int DEFAULT_WORD_LENGTH = 3;
-    private int length = DEFAULT_WORD_LENGTH;
+    private static int DEFAULT_WORD_LENGTH = 3;
     private static final int MAX_WORD_LENGTH = 7;
     private Random random = new Random();
 
@@ -100,8 +99,8 @@ public class AnagramDictionary {
             num = random.nextInt(wordList.size());
             starter = wordList.get(num);
         }while (getAnagramsWithOneMoreLetter(starter).size()<MIN_NUM_ANAGRAMS);
-        if (length<MAX_WORD_LENGTH)
-            length++;
+        if (DEFAULT_WORD_LENGTH<MAX_WORD_LENGTH)
+            DEFAULT_WORD_LENGTH++;
         return starter;
     }
 }
