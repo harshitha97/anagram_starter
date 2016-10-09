@@ -13,7 +13,7 @@ import java.util.Random;
 public class AnagramDictionary {
 
     private static final int MIN_NUM_ANAGRAMS = 5;
-    private static final int DEFAULT_WORD_LENGTH = 3;
+    private static int DEFAULT_WORD_LENGTH = 3;
     private static final int MAX_WORD_LENGTH = 7;
     private Random random = new Random();
 
@@ -45,7 +45,7 @@ public class AnagramDictionary {
     private String sortLetters(String word) {
         char[] alpha = word.toCharArray();
         Arrays.sort(alpha);
-        return alpha.toString();
+        return Arrays.toString(alpha);
     }
 
     boolean isGoodWord(String word, String base) {
@@ -64,25 +64,43 @@ public class AnagramDictionary {
         for (char ch = 'a'; ch <= 'z'; ch++){
             if (lettersToWord.containsKey(sortLetters(word+ch))){
                 temp = lettersToWord.get(sortLetters(word+ch));
-            }
-            for (int i = 0; i<temp.size();i++){
-                if (!(temp.get(i).contains(word))){
+
+            for (int i = 0; i<temp.size();i++) {
+                if (!(temp.get(i).contains(word))) {
                     result.add(temp.get(i));
+                }
+            }}
+        }
+        return result;
+    }
+
+    public ArrayList<String> getAnagramsWithTwoMoreLetters(String word) {
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        for (char ch = 'a'; ch <= 'z'; ch++)
+            for(char ch2 = 'a';ch2<='z';ch2++){
+            if (lettersToWord.containsKey(sortLetters(word+ch+ch2))){
+                temp = lettersToWord.get(sortLetters(word+ch+ch2));
+
+                for (int i = 0; i<temp.size();i++) {
+                if (!(temp.get(i).contains(word))) {
+                    result.add(temp.get(i));
+                    }
                 }
             }
         }
-        return temp;
+        return result;
     }
 
     public String pickGoodStarterWord() {
-        int len = 0, num;
-        String starter = new String();
-        while (len < MIN_NUM_ANAGRAMS) {
+        int num;
+        String starter;
+        do {
             num = random.nextInt(wordList.size());
             starter = wordList.get(num);
-        }
-        if (len < MAX_WORD_LENGTH)
-            len++;
+        }while (getAnagramsWithOneMoreLetter(starter).size()<MIN_NUM_ANAGRAMS);
+        if (DEFAULT_WORD_LENGTH<MAX_WORD_LENGTH)
+            DEFAULT_WORD_LENGTH++;
         return starter;
     }
 }
