@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
-class AnagramDictionary {
+public class AnagramDictionary {
 
     private static final int MIN_NUM_ANAGRAMS = 5;
     private static final int DEFAULT_WORD_LENGTH = 3;
@@ -21,7 +21,7 @@ class AnagramDictionary {
     private HashMap<String,ArrayList<String>> lettersToWord = new HashMap<>();
     ArrayList<String> wordList = new ArrayList<>();
 
-    AnagramDictionary(InputStream wordListStream) throws IOException {
+    public AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
         String line;
         while((line = in.readLine()) != null) {
@@ -74,7 +74,7 @@ class AnagramDictionary {
         return temp;
     }
 
-    String pickGoodStarterWord() {
+    public String pickGoodStarterWord() {
         int len = 0, num;
         String starter = new String();
         while (len < MIN_NUM_ANAGRAMS) {
