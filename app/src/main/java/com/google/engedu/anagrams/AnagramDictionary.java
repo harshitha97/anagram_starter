@@ -10,20 +10,19 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 
-public class AnagramDictionary {
+class AnagramDictionary {
 
     private static final int MIN_NUM_ANAGRAMS = 5;
     private static final int DEFAULT_WORD_LENGTH = 3;
     private static final int MAX_WORD_LENGTH = 7;
     private Random random = new Random();
 
-    private ArrayList<String> wordList;
     private HashSet<String> wordSet;
     private HashMap<String,ArrayList<String>> lettersToWord;
 
-    public AnagramDictionary(InputStream wordListStream) throws IOException {
+    AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
-        wordList = new ArrayList<>();
+        ArrayList<String> wordList = new ArrayList<>();
         wordSet = new HashSet<>();
         lettersToWord = new HashMap<>();
         String line;
@@ -48,27 +47,25 @@ public class AnagramDictionary {
     private String sortLetters(String word) {
         char[] alpha = word.toCharArray();
         Arrays.sort(alpha);
-        String sorted = alpha.toString();
-        return sorted;
+        return alpha.toString();
     }
 
-    public boolean isGoodWord(String word, String base) {
+    boolean isGoodWord(String word, String base) {
         return wordSet.contains(word) && !word.contains(base);
     }
 
-    public ArrayList<String> getAnagrams(String targetWord) {
+    ArrayList<String> getAnagrams(String targetWord) {
 
         return lettersToWord.get(sortLetters(targetWord));
 
      }
 
     public ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
-        ArrayList<String> result = new ArrayList<String>();
-        
-        return result;
+
+        return new ArrayList<>();
     }
 
-    public String pickGoodStarterWord() {
+    String pickGoodStarterWord() {
         return "stop";
     }
 }
