@@ -17,14 +17,12 @@ class AnagramDictionary {
     private static final int MAX_WORD_LENGTH = 7;
     private Random random = new Random();
 
-    private HashSet<String> wordSet;
-    private HashMap<String,ArrayList<String>> lettersToWord;
+    private HashSet<String> wordSet = new HashSet<>();
+    private HashMap<String,ArrayList<String>> lettersToWord = new HashMap<>();
+    ArrayList<String> wordList = new ArrayList<>();
 
     AnagramDictionary(InputStream wordListStream) throws IOException {
         BufferedReader in = new BufferedReader(new InputStreamReader(wordListStream));
-        ArrayList<String> wordList = new ArrayList<>();
-        wordSet = new HashSet<>();
-        lettersToWord = new HashMap<>();
         String line;
         while((line = in.readLine()) != null) {
             String word = line.trim();
@@ -61,11 +59,30 @@ class AnagramDictionary {
      }
 
     public ArrayList<String> getAnagramsWithOneMoreLetter(String word) {
-
-        return new ArrayList<>();
+        ArrayList<String> temp = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
+        for (char ch = 'a'; ch <= 'z'; ch++){
+            if (lettersToWord.containsKey(sortLetters(word+ch))){
+                temp = lettersToWord.get(sortLetters(word+ch));
+            }
+            for (int i = 0; i<temp.size();i++){
+                if (!(temp.get(i).contains(word))){
+                    result.add(temp.get(i));
+                }
+            }
+        }
+        return temp;
     }
 
     String pickGoodStarterWord() {
-        return "stop";
+        int len = 0, num;
+        String starter = new String();
+        while (len < MIN_NUM_ANAGRAMS) {
+            num = random.nextInt(wordList.size());
+            starter = wordList.get(num);
+        }
+        if (len < MAX_WORD_LENGTH)
+            len++;
+        return starter;
     }
 }
